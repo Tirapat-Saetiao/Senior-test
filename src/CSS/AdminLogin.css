@@ -1,0 +1,94 @@
+.admin-login-container {
+  max-width: 400px;
+  margin: 100px auto;
+  padding: 2rem;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border: 1px solid #e0e0e0;
+  text-align: center;
+  color: #333333;
+  font-family: 'Inter', 'Noto Sans Thai', sans-serif;
+}
+
+.admin-login-container h2 {
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  color: #2c3e50;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+.admin-login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.admin-login-input {
+  padding: 0.8rem;
+  border-radius: 4px;
+  border: 1px solid #cccccc;
+  background-color: #ffffff;
+  color: #333333;
+  font-size: 1rem;
+  font-family: 'Inter', 'Noto Sans Thai', sans-serif;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.admin-login-input:focus {
+  border-color: #2c3e50;
+}
+
+.admin-login-input:disabled {
+  background-color: #f5f5f5;
+  color: #999999;
+  cursor: not-allowed;
+}
+
+.admin-login-input::placeholder {
+  color: #999999;
+}
+
+.admin-login-button {
+  padding: 0.9rem;
+  background-color: #2c3e50;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: 'Inter', 'Noto Sans Thai', sans-serif;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.admin-login-button:hover:not(:disabled) {
+  background-color: #34495e;
+}
+
+.admin-login-button:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+}
+
+.admin-login-error {
+  margin-top: 1rem;
+  color: #c0392b;
+  background-color: #fdf2f2;
+  border: 1px solid #e3a8a8;
+  padding: 0.8rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.login-attempts {
+  margin-top: 1rem;
+  color: #8b4513;
+  background-color: #fefcf3;
+  border: 1px solid #d4c49a;
+  padding: 0.8rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
