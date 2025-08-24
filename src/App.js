@@ -52,7 +52,7 @@ function App() {
       if (storedUser && !adminToken && !hasRedirected) {
         const userEmail = storedUser.email;
         if (userEmail.endsWith("@lamduan.mfu.ac.th")) {
-          navigate("/student-dash");
+          navigate("/student");
           setHasRedirected(true);
         } else if (userEmail.endsWith("@mfu.ac.th")) {
           navigate("/staff-dash");
@@ -72,7 +72,7 @@ function App() {
       
       // Redirect based on email domain
       if (user.email.endsWith("@lamduan.mfu.ac.th")) {
-        navigate("/student-dash");
+        navigate("/student");
         setHasRedirected(true);
       } else if (user.email.endsWith("@mfu.ac.th")) {
         navigate("/staff-dash");
@@ -104,11 +104,11 @@ function App() {
             loggedIn && !hasRedirected ? (
               (() => {
                 if (userData?.email?.endsWith("@lamduan.mfu.ac.th")) {
-                  return <Navigate to="/student-dash" replace />;
+                  return <Navigate to="/student" replace />;
                 } else if (userData?.email?.endsWith("@mfu.ac.th")) {
                   return <Navigate to="/staff-dash" replace />;
                 }
-                return <Navigate to="/home" replace />;
+                return <Navigate to="/" replace />;
               })()
             ) : (
               <Navigate to="/home" replace />
@@ -126,7 +126,7 @@ function App() {
             loggedIn && !hasRedirected ? (
               (() => {
                 if (userData?.email?.endsWith("@lamduan.mfu.ac.th")) {
-                  return <Navigate to="/student-dash" replace />;
+                  return <Navigate to="/student" replace />;
                 } else if (userData?.email?.endsWith("@mfu.ac.th")) {
                   return <Navigate to="/staff-dash" replace />;
                 }
@@ -152,7 +152,7 @@ function App() {
               <SpecialBlog />
             </ProtectedRoute>
           } />
-          <Route path="/student-dash" element={
+          <Route path="/student" element={
             <ProtectedRoute isLoggingOut={isLoggingOut}>
               <StudenDash />
             </ProtectedRoute>

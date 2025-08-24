@@ -52,7 +52,7 @@ const LoginPage = ({ onLogin, userData }) => {
       let redirectPath = "/home"; // default fallback
       
       if (userEmail.endsWith("@lamduan.mfu.ac.th")) {
-        redirectPath = "/student-dash";
+        redirectPath = "/student";
       } else if (userEmail.endsWith("@mfu.ac.th")) {
         redirectPath = "/staff-dash";
       }

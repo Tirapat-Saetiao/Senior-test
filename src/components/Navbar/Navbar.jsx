@@ -26,7 +26,7 @@ const Navbar = ({ loggedIn, onLogout }) => {
     if (userData) {
       // Redirect to appropriate dashboard based on user domain
       if (userData.email.endsWith('@lamduan.mfu.ac.th')) {
-        navigate('/student-dash');
+        navigate('/student');
       } else if (userData.email.endsWith('@mfu.ac.th')) {
         navigate('/staff-dash');
       } else {
@@ -46,7 +46,7 @@ const Navbar = ({ loggedIn, onLogout }) => {
     if (!userData) return null;
     
     if (userData.email.endsWith('@lamduan.mfu.ac.th')) {
-      return '/student-dash';
+      return '/student';
     } else if (userData.email.endsWith('@mfu.ac.th')) {
       return '/staff-dash';
     }
@@ -60,7 +60,7 @@ const Navbar = ({ loggedIn, onLogout }) => {
       <div className="navbar-left">
         <div className="titles" onClick={handleLogoClick}>
           <div className="main-title">AI.MFU</div>
-          <div className="sub-title">AI PORTAL FOR MFU</div>
+          <div className="sub-title">AI PORTAL FOR MFU</div>  
         </div>
       </div>
 
@@ -69,7 +69,7 @@ const Navbar = ({ loggedIn, onLogout }) => {
       </div>
 
       <div className={`navbar-right ${menuOpen ? 'active' : ''}`} onClick={handleMobileMenuClose}>
-        <NavLink to="/home" className={({ isActive }) => isActive ? 'navbar-link active' : 'navbar-link'}>Home</NavLink>
+        <NavLink to="/" className={({ isActive }) => isActive ? 'navbar-link active' : 'navbar-link'}>Home</NavLink>
 
         <div className="dropdown">
           <button className="navbar-link">Content ▾</button>
