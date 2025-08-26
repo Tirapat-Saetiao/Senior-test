@@ -49,7 +49,7 @@ const LoginPage = ({ onLogin, userData }) => {
       onLogin(userObject);
 
       // Redirect based on email domain
-      let redirectPath = "/home"; // default fallback
+              let redirectPath = "/"; // default fallback
       
       if (userEmail.endsWith("@lamduan.mfu.ac.th")) {
         redirectPath = "/student";

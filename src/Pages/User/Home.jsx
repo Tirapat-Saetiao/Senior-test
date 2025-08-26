@@ -1,11 +1,12 @@
-import Hep from '../../components/Hep/Hep';
+import React from 'react'
+import Test from '../Dashboard/test'
 
-function Home() { 
+const Home = () => {
   return (
     <div>
-      <Hep />
+      <Test/>
     </div>
-  );
+  )
 }
 
-export default Home;
+export default Home

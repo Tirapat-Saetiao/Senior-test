@@ -26,14 +26,14 @@ const Navbar = ({ loggedIn, onLogout }) => {
     if (userData) {
       // Redirect to appropriate dashboard based on user domain
       if (userData.email.endsWith('@lamduan.mfu.ac.th')) {
-        navigate('/student');
+        navigate('/');
       } else if (userData.email.endsWith('@mfu.ac.th')) {
         navigate('/staff-dash');
-      } else {
-        navigate('/home');
-      }
+              } else {
+          navigate('/home');
+        }
     } else {
-      navigate('/home'); // Default fallback
+              navigate('/home'); // Default fallback
     }
   };
 
@@ -69,7 +69,7 @@ const Navbar = ({ loggedIn, onLogout }) => {
       </div>
 
       <div className={`navbar-right ${menuOpen ? 'active' : ''}`} onClick={handleMobileMenuClose}>
-        <NavLink to="/" className={({ isActive }) => isActive ? 'navbar-link active' : 'navbar-link'}>Home</NavLink>
+        <NavLink to="/home" className={({ isActive }) => isActive ? 'navbar-link active' : 'navbar-link'}>Home</NavLink>
 
         <div className="dropdown">
           <button className="navbar-link">Content ▾</button>
