@@ -1,14 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-
-const ALLOWED_DOMAINS = ["@lamduan.mfu.ac.th", "@mfu.ac.th"];
-
-/**
- * Checks if the provided email is within the allowed domains.
- */
-const isEmailAllowed = (email) => {
-  return ALLOWED_DOMAINS.some((domain) => email.endsWith(domain));
-};
+import { authUtils } from "./constants/config";
 
 /**
  * ProtectedRoute Component
@@ -19,12 +11,15 @@ const ProtectedRoute = ({ children, isLoggingOut }) => {
   const alertShown = useRef(false);
 
   useEffect(() => {
+    // Don't run validation if user is in the process of logging out
+    if (isLoggingOut) return;
+
     const validateAccess = () => {
       const user = JSON.parse(sessionStorage.getItem("user"));
       const adminToken = sessionStorage.getItem("admin_jwt");
 
       if (!user && !adminToken) {
-        if (!alertShown.current && !isLoggingOut) {
+        if (!alertShown.current) {
           alertShown.current = true;
           alert("Please log in to access this page.");
           navigate("/login");
@@ -32,7 +27,7 @@ const ProtectedRoute = ({ children, isLoggingOut }) => {
         return false;
       }
 
-      const isAuthorized = adminToken || (user && isEmailAllowed(user.email));
+      const isAuthorized = adminToken || (user && authUtils.isEmailAllowed(user.email));
 
       if (!isAuthorized && !alertShown.current) {
         alertShown.current = true;
@@ -52,7 +47,7 @@ const ProtectedRoute = ({ children, isLoggingOut }) => {
 
   const user = JSON.parse(sessionStorage.getItem("user"));
   const adminToken = sessionStorage.getItem("admin_jwt");
-  const isAuthorized = adminToken || (user && isEmailAllowed(user.email));
+  const isAuthorized = adminToken || (user && authUtils.isEmailAllowed(user.email));
 
   return isAuthorized ? children : null;
 };

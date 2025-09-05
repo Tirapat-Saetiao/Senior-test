@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import './Navbar.css';
+import { authUtils, USER_TYPES } from '../../constants/config';
 
 const Navbar = ({ loggedIn, onLogout }) => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -24,36 +25,23 @@ const Navbar = ({ loggedIn, onLogout }) => {
 
   const handleLogoClick = () => {
     if (userData) {
-      // Redirect to appropriate dashboard based on user domain
-      if (userData.email.endsWith('@lamduan.mfu.ac.th')) {
+      // Redirect to appropriate dashboard based on user type
+      const userType = authUtils.getUserType(userData.email);
+      if (userType === USER_TYPES.STUDENT) {
         navigate('/');
-      } else if (userData.email.endsWith('@mfu.ac.th')) {
-        navigate('/staff-dash');
-              } else {
-          navigate('/home');
-        }
+      } else if (userType === USER_TYPES.STAFF) {
+        navigate('/');
+      } else {
+        navigate('/home');
+      }
     } else {
-              navigate('/home'); // Default fallback
+      navigate('/'); // Default fallback
     }
   };
 
   const handleMobileMenuClose = () => {
     setMenuOpen(false);
   };
-
-  // Function to get dashboard link based on user domain
-  const getDashboardLink = () => {
-    if (!userData) return null;
-    
-    if (userData.email.endsWith('@lamduan.mfu.ac.th')) {
-      return '/student';
-    } else if (userData.email.endsWith('@mfu.ac.th')) {
-      return '/staff-dash';
-    }
-    return null;
-  };
-
-  const dashboardLink = getDashboardLink();
 
   return (
     <nav className="navbar">
@@ -84,17 +72,6 @@ const Navbar = ({ loggedIn, onLogout }) => {
         <NavLink to="/tools" className={({ isActive }) => isActive ? 'navbar-link active' : 'navbar-link'}>Tools</NavLink>
         <NavLink to="/contact" className={({ isActive }) => isActive ? 'navbar-link active' : 'navbar-link'}>Contact</NavLink>
         <NavLink to="/special-blog" className={({ isActive }) => isActive ? 'navbar-link active' : 'navbar-link'}>Special Blog</NavLink>
-        
-        {dashboardLink && (
-          <NavLink 
-            to={dashboardLink} 
-            className={({ isActive }) => isActive ? 'navbar-link active' : 'navbar-link'}
-          >
-            {userData?.email.endsWith('@lamduan.mfu.ac.th') ? 'Student Dashboard' : 'Staff Dashboard'}
-          </NavLink>
-        )}
-
-       
 
         {loggedIn && (
           <NavLink 

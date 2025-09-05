@@ -1,6 +1,7 @@
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { useEffect, useState } from "react";
 import { BrowserRouter, Navigate, Route, Routes, useNavigate } from "react-router-dom";
+import { GOOGLE_CLIENT_ID, authUtils, MESSAGES } from "./constants/config";
 import Footer from "./components/Footer/Footer";
 import Navbar from "./components/Navbar/Navbar";
 import AdminDashboard from './Pages/Admin/AdminDashboard';
@@ -22,17 +23,10 @@ import SpecialBlog from "./Pages/User/SpecialBlog";
 import Tools from "./Pages/User/Tools";
 import Workflow from "./Pages/User/Workflow";
 import ProtectedRoute from "./ProtectedRoute";
-import StaffDash from "./Pages/User/StaffDash";
-import StudenDash from "./Pages/User/StudenDash";
-import Test from "./Pages/Dashboard/test";
+import Button from "./Pages/User/button";
 
 
-const clientId = "1051486378939-b9jdhnev5o10pvn2kgo6h5iu7h6757ej.apps.googleusercontent.com"
-
-// ✅ Updated to support multiple domains
-const allowedDomains = ["@lamduan.mfu.ac.th", "@mfu.ac.th"];
-const isEmailAllowed = (email) =>
-  allowedDomains.some((domain) => email.endsWith(domain));
+const clientId = GOOGLE_CLIENT_ID;
 
 function App() {
   const navigate = useNavigate();
@@ -46,21 +40,26 @@ function App() {
     const storedUser = JSON.parse(sessionStorage.getItem("user"));
     const adminToken = sessionStorage.getItem("admin_jwt");
 
-    if ((storedUser && isEmailAllowed(storedUser.email)) || adminToken) {
+    if ((storedUser && authUtils.isEmailAllowed(storedUser.email)) || adminToken) {
       setLoggedIn(true);
       setUserData(storedUser || null);
       
       // Only redirect to home if user is already logged in AND hasn't been redirected yet
-      if (storedUser && !adminToken && !hasRedirected) {
+      // Also check if we're currently on the landing page to avoid unnecessary redirects
+      if (storedUser && !adminToken && !hasRedirected ) {
         navigate("/home");
         setHasRedirected(true);
       }
+    } else {
+      // Ensure user is logged out if no valid session
+      setLoggedIn(false);
+      setUserData(null);
     }
     setInitialized(true);
   }, [navigate, hasRedirected]);
 
   const handleLogin = (user) => {
-    if (isEmailAllowed(user.email)) {
+    if (authUtils.isEmailAllowed(user.email)) {
       sessionStorage.setItem("user", JSON.stringify(user));
       setLoggedIn(true);
       setUserData(user);
@@ -70,7 +69,7 @@ function App() {
       navigate("/home");
       setHasRedirected(true);
     } else {
-      alert("Access Denied: Only @lamduan.mfu.ac.th or @mfu.ac.th emails can log in.");
+      alert(MESSAGES.ACCESS_DENIED);
     }
   };
 
@@ -82,25 +81,18 @@ function App() {
     setLoggedIn(false);
     setUserData(null);
     setHasRedirected(false); // Reset redirect flag
-    navigate("/", { replace: true });
+    navigate("/login", { replace: true }); // Redirect to landing page, not home
     setTimeout(() => setIsLoggingOut(false), 500);
   };
 
   return (
     <div className="App">
+      <Button />
       <Navbar loggedIn={loggedIn} onLogout={handleLogout} />
       {initialized && (
         <Routes>
-          <Route path="/" element={
-            loggedIn && !hasRedirected ? (
-              <Navigate to="/test" replace />
-              
-            ) : (
-              <LandingPage />
-            )
-          } />
+          <Route path="/" element={<LandingPage />} />
           <Route path="/home" element={<Home />} />
-          <Route path="/test" element={<Test />} />
           <Route path="/ai-article" element={<AIArticle />} />
           <Route path="/ai-work" element={<AIWork />} />
           <Route path="/gen-ai" element={<GenAI />} />
@@ -109,9 +101,8 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/tools" element={<Tools />} />
           <Route path="/login" element={
-            loggedIn && !hasRedirected ? (
-              <Navigate to="/test" replace />
-              
+            loggedIn ? (
+              <Navigate to="/home" replace />
             ) : (
               <LoginPage onLogin={handleLogin} />
             )
@@ -132,16 +123,9 @@ function App() {
               <SpecialBlog />
             </ProtectedRoute>
           } />
-          <Route path="/student" element={
-            <ProtectedRoute isLoggingOut={isLoggingOut}>
-              <StudenDash />
-            </ProtectedRoute>
-          } />
-          <Route path="/staff-dash" element={
-            <ProtectedRoute isLoggingOut={isLoggingOut}>
-              <StaffDash />
-            </ProtectedRoute>
-          } />
+          
+          
+          
         </Routes>
       )}
       <Footer />

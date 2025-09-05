@@ -1,0 +1,68 @@
+// Alternative simple version for Home.jsx if you prefer just a Facebook button
+
+import React from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFacebook } from '@fortawesome/free-brands-svg-icons'
+import UnifiedDashboard from '../Dashboard/UnifiedDashboard'
+import '../../CSS/Home.css'
+
+const Home = () => {
+  return (
+    <div>
+      <UnifiedDashboard />
+      
+      {/* Simple Floating Facebook Contact Button */}
+      <div className="floating-contact-btn">
+        <a 
+          href="https://www.facebook.com/your-facebook-page" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="facebook-contact-link"
+          title="Contact us on Facebook"
+        >
+          <FontAwesomeIcon icon={faFacebook} />
+        </a>
+      </div>
+    </div>
+  )
+}
+
+export default Home
+
+/* 
+Add this CSS to Home.css for the simple version:
+
+.floating-contact-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 1000;
+}
+
+.facebook-contact-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #1877f2, #42a5f5);
+  color: white;
+  border-radius: 50%;
+  text-decoration: none;
+  font-size: 24px;
+  box-shadow: 0 4px 15px rgba(24, 119, 242, 0.4);
+  transition: all 0.3s ease;
+  animation: pulse 2s infinite;
+}
+
+.facebook-contact-link:hover {
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 0 8px 25px rgba(24, 119, 242, 0.6);
+  color: white;
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 4px 15px rgba(24, 119, 242, 0.4); }
+  50% { box-shadow: 0 4px 20px rgba(24, 119, 242, 0.8); }
+}
+*/

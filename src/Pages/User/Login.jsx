@@ -1,28 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
-import { useNavigate } from "react-router-dom";
 import "../../CSS/Login.css";
-
-
-const allowedDomains = [
-  "@lamduan.mfu.ac.th",
-  "@mfu.ac.th",
-];
-
-const isEmailAllowed = (email) => {
-  return allowedDomains.some(domain => email.endsWith(domain));
-};
+import { authUtils } from "../../constants/config";
 
 const LoginPage = ({ onLogin, userData }) => {
-  const navigate = useNavigate();
   const [loginSuccess, setLoginSuccess] = useState(false);
 
   useEffect(() => {
     // Check if user is already logged in - but don't redirect automatically
     // Let App.js handle the initial redirect to avoid navigation conflicts
     const storedUser = JSON.parse(sessionStorage.getItem("user"));
-    if (storedUser && isEmailAllowed(storedUser.email)) {
+    if (storedUser && authUtils.isEmailAllowed(storedUser.email)) {
       // User is already logged in, but we won't redirect here
       // This prevents navigation conflicts with App.js
     }
@@ -38,7 +27,7 @@ const LoginPage = ({ onLogin, userData }) => {
       const userObject = jwtDecode(response.credential);
       const userEmail = userObject.email;
 
-      if (!isEmailAllowed(userEmail)) {
+      if (!authUtils.isEmailAllowed(userEmail)) {
         alert("❌ Access Denied: Only @lamduan.mfu.ac.th or @mfu.ac.th emails are allowed.");
         return;
       }
@@ -48,19 +37,8 @@ const LoginPage = ({ onLogin, userData }) => {
       setLoginSuccess(true);
       onLogin(userObject);
 
-      // Redirect based on email domain
-              let redirectPath = "/"; // default fallback
-      
-      if (userEmail.endsWith("@lamduan.mfu.ac.th")) {
-        redirectPath = "/student";
-      } else if (userEmail.endsWith("@mfu.ac.th")) {
-        redirectPath = "/staff-dash";
-      }
-
-      // Redirect after successful login
-      setTimeout(() => {
-        navigate(redirectPath);
-      }, 1000);
+      // Let App.js handle the redirection to avoid conflicts
+      // App.js will redirect all users to /home
 
     } catch (error) {
       console.error("Login error:", error);

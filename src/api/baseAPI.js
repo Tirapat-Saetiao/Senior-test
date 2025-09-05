@@ -1,9 +1,16 @@
 // baseAPI.js - Base API configuration and utilities
+import { authUtils } from '../constants/config';
+
+
 
 export const baseConfig = {
-  baseURL: 'https://ai.mfu.ac.th/strapi/api',
+  //student API - Strapi
+  baseURL: `${process.env.REACT_APP_STRAPI_DOMAIN}/strapi/api` ,
   timeout: 30000,
+  //staff API - WordPress  
+  staffURL: ``,
 };
+
 
 // Enhanced fetch with better error handling and timeout
 export const fetchWithTimeout = async (url, options = {}) => {
@@ -38,13 +45,8 @@ export const fetchWithTimeout = async (url, options = {}) => {
 
 // Common utility functions
 export const apiUtils = {
-  // User type detection
-  getUserType: (email) => {
-    if (!email) return 'unknown';
-    if (email.endsWith('@lamduan.mfu.ac.th')) return 'student';
-    if (email.endsWith('@mfu.ac.th')) return 'staff';
-    return 'unknown';
-  },
+  // User type detection (using centralized config)
+  getUserType: authUtils.getUserType,
 
   // Build query parameters
   buildParams: (params = {}) => {

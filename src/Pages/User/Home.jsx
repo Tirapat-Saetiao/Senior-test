@@ -1,10 +1,10 @@
 import React from 'react'
-import Test from '../Dashboard/test'
+import UnifiedDashboard from '../Dashboard/UnifiedDashboard'
 
 const Home = () => {
   return (
     <div>
-      <Test/>
+      <UnifiedDashboard />
     </div>
   )
 }
