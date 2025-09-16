@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Hep.css";
 
@@ -11,11 +11,6 @@ const Hep = () => {
   const [error, setError] = useState(null);
   const [gptTools, setGptTools] = useState([]);
   const navigate = useNavigate();
-  
-  // Refs for scroll animations
-  const gptSectionRef = useRef(null);
-  const blogSectionRef = useRef(null);
-  const categoryRefs = useRef([]);
 
   useEffect(() => {
     Promise.all([
@@ -34,40 +29,6 @@ const Hep = () => {
         setLoading(false);
       });
   }, []);
-
-
-  useEffect(() => {
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -100px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('animate-in');
-        }
-      });
-    }, observerOptions);
-
- 
-    if (gptSectionRef.current) observer.observe(gptSectionRef.current);
-    if (blogSectionRef.current) observer.observe(blogSectionRef.current);
-    
-
-    categoryRefs.current.forEach(ref => {
-      if (ref) observer.observe(ref);
-    });
-
-
-    const cards = document.querySelectorAll('.gpt-card, .blog-card');
-    cards.forEach((card, index) => {
-      card.style.animationDelay = `${index * 0.1}s`;
-      observer.observe(card);
-    });
-
-    return () => observer.disconnect();
-  }, [gptTools, posts]);
 
   const getPostsByCategory = (catId) =>
     posts.filter((post) => post.categories.includes(catId)).slice(0, 3);
@@ -94,25 +55,26 @@ const Hep = () => {
       </section>
 
       {/* GPT Tools */}
-      <section className="section scroll-animate" ref={gptSectionRef}>
+      <section className="section">
         <h2 className="section-title">
           <span className="title-english">Explore GPT Tools</span>
           <span className="title-thai">GPT ที่พัฒนาเพื่อบุคลากร</span>
         </h2>
         <div className="gpt-cards">
-          {gptTools.map((tool, index) => {
+          {gptTools.map((tool) => {
             const pic = tool.picture?.[0];
             const imageUrl = pic ? `https://ai.mfu.ac.th/strapi${pic.formats?.medium?.url || pic.url}` : null;
             return (
               <div
                 key={tool.id}
-                className="gpt-card scroll-animate"
+                className="gpt-card"
                 onClick={() => window.open(tool.Link, "_blank")}
-                style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <div className="gpt-image-container">
-                  {imageUrl && <img src={imageUrl} alt={tool.name} className="gpt-image" />}
-                </div>
+                {imageUrl && (
+                  <div className="gpt-image-container">
+                    <img src={imageUrl} alt={tool.name} className="gpt-image" />
+                  </div>
+                )}
                 <div className="gpt-card-content">
                   <h3 className="gpt-card-title">{tool.name}</h3>
                   <p className="gpt-card-description">{tool.description}</p>
@@ -123,11 +85,10 @@ const Hep = () => {
         </div>
       </section>
 
-      {/* Section Divider */}
       <div className="section-divider"></div>
 
       {/* Blog Posts */}
-      <section className="section scroll-animate" ref={blogSectionRef}>
+      <section className="section">
         <h2 className="section-title">
           <span className="title-english">Latest Blogs</span>
           <span className="title-thai">บล็อกล่าสุด</span>
@@ -137,29 +98,19 @@ const Hep = () => {
         ) : error ? (
           <div className="error">{error}</div>
         ) : (
-          CATEGORY_IDS.map((catId, categoryIndex) => {
+          CATEGORY_IDS.map((catId) => {
             const catPosts = getPostsByCategory(catId);
             if (catPosts.length === 0) return null;
             return (
-              <div 
-                key={catId} 
-                className="category-section scroll-animate"
-                ref={el => categoryRefs.current[categoryIndex] = el}
-                style={{ animationDelay: `${categoryIndex * 0.2}s` }}
-              >
-                <h3 className="category-title">
-                  {getCategoryName(catId)}
-                </h3>
+              <div key={catId} className="category-section">
+                <h3 className="category-title">{getCategoryName(catId)}</h3>
                 <div className="blog-grid">
-                  {catPosts.map((post, index) => (
+                  {catPosts.map((post) => (
                     <div
                       key={post.id}
-                      className="blog-card scroll-animate"
+                      className="blog-card"
                       onClick={() => navigate(`/post/${post.id}`)}
-                      style={{ 
-                        cursor: "pointer",
-                        animationDelay: `${(categoryIndex * 3 + index) * 0.1}s`
-                      }}
+                      style={{ cursor: "pointer" }}
                     >
                       {post.yoast_head_json?.og_image?.[0]?.url && (
                         <div className="blog-image-container">
@@ -171,9 +122,7 @@ const Hep = () => {
                         </div>
                       )}
                       <div className="blog-content">
-                        <h4 className="blog-title">
-                          {post.title?.rendered || "Untitled"}
-                        </h4>
+                        <h4 className="blog-title">{post.title?.rendered || "Untitled"}</h4>
                         <div
                           className="blog-excerpt"
                           dangerouslySetInnerHTML={{
@@ -182,7 +131,7 @@ const Hep = () => {
                                 ? post.excerpt.rendered.substring(0, 150) + "..."
                                 : "No preview available",
                           }}
-                        ></div>
+                        />
                         <div className="read-more">
                           <span className="read-more-english">Read More</span>
                         </div>

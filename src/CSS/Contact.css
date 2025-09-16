@@ -1,3 +1,67 @@
+:root {
+  /* Dark Mode (Default) */
+  --body-color: #e8f4f8;
+  --page-bg-start: #0a1628;
+  --page-bg-mid: #1e3a8a;
+  --page-bg-end: #1e40af;
+  --page-overlay: rgba(0, 0, 20, 0.3);
+  --header-title-color: #f0f9ff;
+  --header-subtitle-color: rgba(186, 230, 253, 0.9);
+  --form-bg: rgba(15, 23, 42, 0.95);
+  --form-border: rgba(59, 130, 246, 0.3);
+  --form-shadow: rgba(0, 0, 0, 0.4);
+  --form-shadow-hover: rgba(0, 0, 0, 0.5);
+  --form-shadow-accent: rgba(59, 130, 246, 0.2);
+  --form-accent-start: #1e40af;
+  --form-accent-mid: #3b82f6;
+  --form-accent-end: #60a5fa;
+  --label-color: #60a5fa;
+  --input-border: #334155;
+  --input-bg: #1e293b;
+  --input-color: #f0f9ff;
+  --input-placeholder: #64748b;
+  --input-focus-border: #3b82f6;
+  --input-focus-shadow: rgba(59, 130, 246, 0.2);
+  --input-focus-bg: #0f172a;
+  --btn-bg-start: #1d4ed8;
+  --btn-bg-end: #1e40af;
+  --btn-hover-bg-start: #2563eb;
+  --btn-hover-bg-end: #1d4ed8;
+  --btn-shadow: rgba(29, 78, 216, 0.4);
+}
+
+/* Light Mode */
+[data-theme="light"] {
+  --body-color: #1e293b;
+  --page-bg-start: #f1f5f9;
+  --page-bg-mid: #e2e8f0;
+  --page-bg-end: #cbd5e1;
+  --page-overlay: rgba(255, 255, 255, 0.1);
+  --header-title-color: #0f172a;
+  --header-subtitle-color: rgba(51, 65, 85, 0.8);
+  --form-bg: rgba(255, 255, 255, 0.95);
+  --form-border: rgba(99, 102, 241, 0.2);
+  --form-shadow: rgba(0, 0, 0, 0.1);
+  --form-shadow-hover: rgba(0, 0, 0, 0.15);
+  --form-shadow-accent: rgba(99, 102, 241, 0.1);
+  --form-accent-start: #6366f1;
+  --form-accent-mid: #8b5cf6;
+  --form-accent-end: #a855f7;
+  --label-color: #6366f1;
+  --input-border: #d1d5db;
+  --input-bg: #f9fafb;
+  --input-color: #1f2937;
+  --input-placeholder: #6b7280;
+  --input-focus-border: #6366f1;
+  --input-focus-shadow: rgba(99, 102, 241, 0.2);
+  --input-focus-bg: #ffffff;
+  --btn-bg-start: #6366f1;
+  --btn-bg-end: #8b5cf6;
+  --btn-hover-bg-start: #7c3aed;
+  --btn-hover-bg-end: #6366f1;
+  --btn-shadow: rgba(99, 102, 241, 0.4);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -6,26 +70,29 @@
 
 body {
   font-family: 'Segoe UI', sans-serif;
-  color: #e8f4f8;
+  color: var(--body-color);
+  transition: color 0.3s ease;
 }
 
 .contact-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0a1628, #1e3a8a, #1e40af);
+  background: linear-gradient(135deg, var(--page-bg-start), var(--page-bg-mid), var(--page-bg-end));
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 2rem;
   position: relative;
+  transition: background 0.3s ease;
 }
 
 .contact-page::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 20, 0.3);
+  background: var(--page-overlay);
   pointer-events: none;
+  transition: background 0.3s ease;
 }
 
 .contact-header {
@@ -38,16 +105,18 @@ body {
 .contact-header h1 {
   font-size: 2.5rem;
   font-weight: 600;
-  color: #f0f9ff;
+  color: var(--header-title-color);
   margin-bottom: 0.5rem;
   letter-spacing: 1px;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  transition: color 0.3s ease;
 }
 
 .contact-header p {
   font-size: 1.1rem;
-  color: rgba(186, 230, 253, 0.9);
+  color: var(--header-subtitle-color);
   font-weight: 300;
+  transition: color 0.3s ease;
 }
 
 .contact-form-container {
@@ -58,18 +127,18 @@ body {
 }
 
 .contact-form {
-  background: rgba(15, 23, 42, 0.95);
+  background: var(--form-bg);
   border-radius: 12px;
   padding: 2.5rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 5px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 30px var(--form-shadow), 0 5px 15px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
-  border: 1px solid rgba(59, 130, 246, 0.3);
+  border: 1px solid var(--form-border);
   position: relative;
 }
 
 .contact-form:hover {
   transform: translateY(-2px);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5), 0 8px 20px rgba(59, 130, 246, 0.2);
+  box-shadow: 0 15px 40px var(--form-shadow-hover), 0 8px 20px var(--form-shadow-accent);
 }
 
 .contact-form::after {
@@ -79,7 +148,7 @@ body {
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, #1e40af, #3b82f6, #60a5fa);
+  background: linear-gradient(90deg, var(--form-accent-start), var(--form-accent-mid), var(--form-accent-end));
   border-radius: 12px 12px 0 0;
 }
 
@@ -95,7 +164,7 @@ body {
   display: block;
   margin-bottom: 0.5rem;
   font-weight: 500;
-  color: #60a5fa;
+  color: var(--label-color);
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -106,10 +175,10 @@ body {
 .form-group textarea {
   width: 100%;
   padding: 0.75rem 1rem;
-  border: 2px solid #334155;
+  border: 2px solid var(--input-border);
   border-radius: 6px;
-  background: #1e293b;
-  color: #f0f9ff;
+  background: var(--input-bg);
+  color: var(--input-color);
   font-size: 1rem;
   font-family: inherit;
   transition: all 0.3s ease;
@@ -118,16 +187,17 @@ body {
 
 .form-group input::placeholder,
 .form-group textarea::placeholder {
-  color: #64748b;
+  color: var(--input-placeholder);
   font-style: italic;
+  transition: color 0.3s ease;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+  border-color: var(--input-focus-border);
+  box-shadow: 0 0 0 3px var(--input-focus-shadow);
   transform: translateY(-1px);
-  background: #0f172a;
+  background: var(--input-focus-bg);
 }
 
 .form-group textarea {
@@ -138,7 +208,7 @@ body {
 .submit-btn {
   width: 100%;
   padding: 1rem 2rem;
-  background: linear-gradient(135deg, #1d4ed8, #1e40af);
+  background: linear-gradient(135deg, var(--btn-bg-start), var(--btn-bg-end));
   border: none;
   border-radius: 6px;
   color: white;
@@ -154,8 +224,8 @@ body {
 
 .submit-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(29, 78, 216, 0.4);
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  box-shadow: 0 8px 20px var(--btn-shadow);
+  background: linear-gradient(135deg, var(--btn-hover-bg-start), var(--btn-hover-bg-end));
 }
 
 @keyframes fadeIn {
@@ -179,4 +249,11 @@ body {
   .contact-form { padding: 1.5rem 1rem; }
   .contact-header h1 { font-size: 1.8rem; }
   .contact-header p { font-size: 1rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }

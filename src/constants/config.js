@@ -1,7 +1,7 @@
 // Application Configuration Constants
 
 // ✅ Allowed email domains for user authentication
-export const ALLOWED_DOMAINS = ["@lamduan.mfu.ac.th", "@mfu.ac.th","buzza.2016@gmail.com","tirapat.saetiao@gmail.com"];
+export const ALLOWED_DOMAINS = ["@lamduan.mfu.ac.th", "@mfu.ac.th","tanatchapatomm@gmail.com"];
 
 // ✅ Google OAuth Client ID
 export const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID ;
@@ -17,7 +17,7 @@ export const USER_TYPES = {
 // ✅ Domain to user type mapping
 export const DOMAIN_USER_TYPE_MAP = {
   '@lamduan.mfu.ac.th': USER_TYPES.STUDENT,
-  'buzza.2016@gmail.com': USER_TYPES.STAFF
+  'tanatchapatomm@gmail.com': USER_TYPES.STAFF
 };
 
 // ✅ Utility functions

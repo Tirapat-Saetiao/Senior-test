@@ -1,3 +1,71 @@
+:root {
+  /* Dark Mode (Default) */
+  --bg-gradient: linear-gradient(45deg, #1a1a2e, #16213e, #0f3460, #1a1a2e, #16213e);
+  --overlay-primary: rgba(138, 43, 226, 0.1);
+  --overlay-secondary: rgba(72, 61, 139, 0.08);
+  --overlay-tertiary: rgba(25, 25, 112, 0.12);
+  --orb-primary: rgba(138, 43, 226, 0.15);
+  --orb-secondary: rgba(72, 61, 139, 0.12);
+  
+  --star-gradient: linear-gradient(45deg, #8a2be2, #ffffff);
+  --star-shadow: rgba(138, 43, 226, 0.8);
+  --star-trail: rgba(138, 43, 226, 0.6);
+  
+  --text-primary: #ffffff;
+  --text-secondary: #b8b8d1;
+  --text-success: #4ade80;
+  --text-shadow: rgba(138, 43, 226, 0.5);
+  --text-shadow-light: rgba(138, 43, 226, 0.3);
+  --success-glow: rgba(74, 222, 128, 0.4);
+  
+  --accent-primary: #8a2be2;
+  --accent-secondary: #483d8b;
+  --accent-glow: rgba(138, 43, 226, 0.6);
+  
+  --button-bg: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(240, 240, 255, 0.9));
+  --button-border: rgba(138, 43, 226, 0.4);
+  --button-border-hover: rgba(138, 43, 226, 0.6);
+  --button-shadow: rgba(138, 43, 226, 0.3);
+  --button-shadow-hover: rgba(138, 43, 226, 0.4);
+  --button-shine: rgba(138, 43, 226, 0.1);
+  
+  --glow-radial: rgba(138, 43, 226, 0.1);
+}
+
+[data-theme="light"] {
+  /* Light Mode */
+  --bg-gradient: linear-gradient(45deg, #f8fafc, #e2e8f0, #cbd5e1, #f1f5f9, #e2e8f0);
+  --overlay-primary: rgba(59, 130, 246, 0.08);
+  --overlay-secondary: rgba(139, 92, 246, 0.06);
+  --overlay-tertiary: rgba(79, 70, 229, 0.1);
+  --orb-primary: rgba(59, 130, 246, 0.12);
+  --orb-secondary: rgba(139, 92, 246, 0.1);
+  
+  --star-gradient: linear-gradient(45deg, #3b82f6, #1e293b);
+  --star-shadow: rgba(59, 130, 246, 0.6);
+  --star-trail: rgba(59, 130, 246, 0.4);
+  
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --text-success: #059669;
+  --text-shadow: rgba(59, 130, 246, 0.4);
+  --text-shadow-light: rgba(59, 130, 246, 0.25);
+  --success-glow: rgba(5, 150, 105, 0.3);
+  
+  --accent-primary: #3b82f6;
+  --accent-secondary: #8b5cf6;
+  --accent-glow: rgba(59, 130, 246, 0.5);
+  
+  --button-bg: linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.95));
+  --button-border: rgba(59, 130, 246, 0.3);
+  --button-border-hover: rgba(59, 130, 246, 0.5);
+  --button-shadow: rgba(59, 130, 246, 0.2);
+  --button-shadow-hover: rgba(59, 130, 246, 0.3);
+  --button-shine: rgba(59, 130, 246, 0.08);
+  
+  --glow-radial: rgba(59, 130, 246, 0.08);
+}
+
 .login-container {
   position: relative;
   min-height: 100vh;
@@ -5,7 +73,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(45deg, #1a1a2e, #16213e, #0f3460, #1a1a2e, #16213e);
+  background: var(--bg-gradient);
   background-size: 400% 400%;
   animation: gradientShift 15s ease infinite;
   overflow: hidden;
@@ -19,7 +87,6 @@
   100% { background-position: 0% 50%; }
 }
 
-
 .login-container::before {
   content: '';
   position: absolute;
@@ -28,9 +95,9 @@
   width: 100%;
   height: 100%;
   background: 
-    radial-gradient(circle at 20% 80%, rgba(138, 43, 226, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(72, 61, 139, 0.08) 0%, transparent 50%),
-    radial-gradient(circle at 40% 40%, rgba(25, 25, 112, 0.12) 0%, transparent 50%);
+    radial-gradient(circle at 20% 80%, var(--overlay-primary) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, var(--overlay-secondary) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, var(--overlay-tertiary) 0%, transparent 50%);
   pointer-events: none;
   z-index: 1;
 }
@@ -42,7 +109,7 @@
   right: 15%;
   width: 250px;
   height: 250px;
-  background: conic-gradient(from 0deg, transparent, rgba(138, 43, 226, 0.15), transparent, rgba(72, 61, 139, 0.12), transparent);
+  background: conic-gradient(from 0deg, transparent, var(--orb-primary), transparent, var(--orb-secondary), transparent);
   border-radius: 50%;
   animation: aiOrb 20s ease-in-out infinite;
   filter: blur(1px);
@@ -71,10 +138,10 @@
   position: absolute;
   width: 2px;
   height: 2px;
-  background: linear-gradient(45deg, #8a2be2, #ffffff);
+  background: var(--star-gradient);
   border-radius: 50%;
   animation: starfall linear infinite;
-  box-shadow: 0 0 6px rgba(138, 43, 226, 0.8);
+  box-shadow: 0 0 6px var(--star-shadow);
 }
 
 .star::before {
@@ -84,7 +151,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(45deg, transparent, rgba(138, 43, 226, 0.6));
+  background: linear-gradient(45deg, transparent, var(--star-trail));
   border-radius: 50%;
   animation: twinkle 2s ease-in-out infinite alternate;
 }
@@ -111,16 +178,15 @@
   100% { opacity: 1; transform: scale(1.2); }
 }
 
-
 .login-container h2 {
   position: relative;
   z-index: 10;
-  color: #ffffff;
+  color: var(--text-primary);
   font-size: 3rem;
   font-weight: 700;
   text-align: center;
   margin-bottom: 2rem;
-  text-shadow: 0 0 20px rgba(138, 43, 226, 0.5);
+  text-shadow: 0 0 20px var(--text-shadow);
   letter-spacing: -1px;
   animation: fadeInUp 0.8s ease-out;
 }
@@ -142,7 +208,7 @@
   top: -15px;
   left: -25px;
   font-size: 1.5rem;
-  color: rgba(138, 43, 226, 0.6);
+  color: var(--accent-glow);
   animation: sparkle 3s ease-in-out infinite;
 }
 
@@ -152,7 +218,7 @@
   bottom: -15px;
   right: -25px;
   font-size: 1.2rem;
-  color: rgba(72, 61, 139, 0.7);
+  color: var(--accent-secondary);
   animation: sparkle 3s ease-in-out infinite 1.5s;
 }
 
@@ -174,14 +240,14 @@
   margin: 1rem 0;
   font-size: 1.1rem;
   font-weight: 500;
-  color: #b8b8d1;
-  text-shadow: 0 0 10px rgba(138, 43, 226, 0.3);
+  color: var(--text-secondary);
+  text-shadow: 0 0 10px var(--text-shadow-light);
   animation: fadeIn 0.6s ease-out 0.2s both;
 }
 
 .login-message.success {
-  color: #4ade80;
-  text-shadow: 0 0 15px rgba(74, 222, 128, 0.4);
+  color: var(--text-success);
+  text-shadow: 0 0 15px var(--success-glow);
   animation: successPulse 0.6s ease-out;
 }
 
@@ -202,11 +268,10 @@
   text-align: center;
   margin: 1.5rem 0;
   font-size: 1.1rem;
-  color: #b8b8d1;
-  text-shadow: 0 0 10px rgba(138, 43, 226, 0.3);
+  color: var(--text-secondary);
+  text-shadow: 0 0 10px var(--text-shadow-light);
   animation: fadeIn 0.6s ease-out 0.4s both;
 }
-
 
 .google-login-button {
   position: relative;
@@ -227,7 +292,6 @@
   }
 }
 
-
 .google-login-button::before {
   content: '';
   position: absolute;
@@ -236,9 +300,9 @@
   width: calc(100% + 100px);
   height: calc(100% + 100px);
   background: 
-    radial-gradient(circle at 30% 30%, rgba(138, 43, 226, 0.15) 2px, transparent 2px),
-    radial-gradient(circle at 70% 70%, rgba(72, 61, 139, 0.12) 1px, transparent 1px),
-    radial-gradient(circle at 50% 20%, rgba(138, 43, 226, 0.08) 3px, transparent 3px);
+    radial-gradient(circle at 30% 30%, var(--orb-primary) 2px, transparent 2px),
+    radial-gradient(circle at 70% 70%, var(--orb-secondary) 1px, transparent 1px),
+    radial-gradient(circle at 50% 20%, var(--overlay-primary) 3px, transparent 3px);
   background-size: 40px 40px, 25px 25px, 60px 60px;
   border-radius: 50%;
   opacity: 0.4;
@@ -253,7 +317,7 @@
   left: 50%;
   width: 200px;
   height: 200px;
-  background: conic-gradient(from 0deg, transparent, rgba(138, 43, 226, 0.1), transparent);
+  background: conic-gradient(from 0deg, transparent, var(--orb-primary), transparent);
   border-radius: 50%;
   transform: translate(-50%, -50%);
   animation: spinGlow 12s linear infinite reverse;
@@ -272,14 +336,13 @@
   100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
-
 .google-login-button > div {
   transform: scale(1.2) !important;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
   border-radius: 16px !important;
-  box-shadow: 0 8px 30px rgba(138, 43, 226, 0.3) !important;
-  border: 2px solid rgba(138, 43, 226, 0.4) !important;
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(240, 240, 255, 0.9)) !important;
+  box-shadow: 0 8px 30px var(--button-shadow) !important;
+  border: 2px solid var(--button-border) !important;
+  background: var(--button-bg) !important;
   backdrop-filter: blur(10px) !important;
   position: relative !important;
   overflow: hidden !important;
@@ -287,8 +350,8 @@
 
 .google-login-button > div:hover {
   transform: scale(1.25) translateY(-3px) !important;
-  box-shadow: 0 12px 40px rgba(138, 43, 226, 0.4) !important;
-  border-color: rgba(138, 43, 226, 0.6) !important;
+  box-shadow: 0 12px 40px var(--button-shadow-hover) !important;
+  border-color: var(--button-border-hover) !important;
 }
 
 .google-login-button > div::before {
@@ -298,12 +361,29 @@
   left: -100% !important;
   width: 100% !important;
   height: 100% !important;
-  background: linear-gradient(90deg, transparent, rgba(138, 43, 226, 0.1), transparent) !important;
+  background: linear-gradient(90deg, transparent, var(--button-shine), transparent) !important;
   transition: left 0.6s ease !important;
 }
 
 .google-login-button > div:hover::before {
   left: 100% !important;
+}
+
+/* Light mode specific adjustments */
+[data-theme="light"] .login-container h2::before {
+  opacity: 0.7;
+}
+
+[data-theme="light"] .login-container h2::after {
+  opacity: 0.8;
+}
+
+[data-theme="light"] .star {
+  opacity: 0.6;
+}
+
+[data-theme="light"] .login-container::after {
+  opacity: 0.3;
 }
 
 /* Responsive Design */
@@ -357,7 +437,6 @@
   }
 }
 
-
 .starfall-background.loading {
   animation: starfallLoading 2s ease-in-out;
 }
@@ -366,7 +445,6 @@
   0% { opacity: 0; }
   100% { opacity: 1; }
 }
-
 
 .login-container h2,
 .login-message.success {
@@ -381,7 +459,7 @@
   left: 50%;
   width: 120%;
   height: 120%;
-  background: radial-gradient(circle, rgba(138, 43, 226, 0.1) 0%, transparent 70%);
+  background: radial-gradient(circle, var(--glow-radial) 0%, transparent 70%);
   transform: translate(-50%, -50%);
   z-index: -1;
   animation: glowPulse 3s ease-in-out infinite;

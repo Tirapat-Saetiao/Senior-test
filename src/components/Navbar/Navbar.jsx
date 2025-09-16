@@ -1,22 +1,39 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import './Navbar.css';
-import { authUtils, USER_TYPES } from '../../constants/config';
 
 const Navbar = ({ loggedIn, onLogout }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
-  const [userData, setUserData] = useState(null);
+  const [isDarkMode, setIsDarkMode] = useState(true);
   const navigate = useNavigate();
-  
+
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
   useEffect(() => {
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    if (savedTheme) {
+      setIsDarkMode(savedTheme === 'dark');
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    } else {
+      setIsDarkMode(prefersDark);
+      document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = isDarkMode ? 'light' : 'dark';
+    setIsDarkMode(!isDarkMode);
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+  };
+
+  useEffect(() => {
     const adminToken = sessionStorage.getItem('admin_jwt');
-    const storedUser = JSON.parse(sessionStorage.getItem('user'));
     setIsAdminLoggedIn(!!adminToken);
-    setUserData(storedUser);
-  }, [loggedIn]); // Re-check when loggedIn state changes
+  }, [loggedIn]);
 
   const handleLogin = (type) => {
     if (type === 'admin') navigate('/admin-login');
@@ -24,19 +41,7 @@ const Navbar = ({ loggedIn, onLogout }) => {
   };
 
   const handleLogoClick = () => {
-    if (userData) {
-      // Redirect to appropriate dashboard based on user type
-      const userType = authUtils.getUserType(userData.email);
-      if (userType === USER_TYPES.STUDENT) {
-        navigate('/');
-      } else if (userType === USER_TYPES.STAFF) {
-        navigate('/');
-      } else {
-        navigate('/home');
-      }
-    } else {
-      navigate('/'); // Default fallback
-    }
+    navigate('/home');
   };
 
   const handleMobileMenuClose = () => {
@@ -45,19 +50,19 @@ const Navbar = ({ loggedIn, onLogout }) => {
 
   return (
     <nav className="navbar">
+      {/* Left: Logo */}
       <div className="navbar-left">
         <div className="titles" onClick={handleLogoClick}>
           <div className="main-title">AI.MFU</div>
-          <div className="sub-title">AI PORTAL FOR MFU</div>  
+          <div className="sub-title">AI PORTAL FOR MFU</div>
         </div>
       </div>
 
-      <div className="hamburger" onClick={toggleMenu}>
-        ☰
-      </div>
-
-      <div className={`navbar-right ${menuOpen ? 'active' : ''}`} onClick={handleMobileMenuClose}>
-        <NavLink to="/home" className={({ isActive }) => isActive ? 'navbar-link active' : 'navbar-link'}>Home</NavLink>
+      {/* Center: Nav Links + Login/Logout/Admin */}
+      <div className={`navbar-center ${menuOpen ? 'active' : ''}`} onClick={handleMobileMenuClose}>
+        <NavLink to="/home" className={({ isActive }) => isActive ? 'navbar-link active' : 'navbar-link'}>
+          Home
+        </NavLink>
 
         <div className="dropdown">
           <button className="navbar-link">Content ▾</button>
@@ -69,24 +74,17 @@ const Navbar = ({ loggedIn, onLogout }) => {
           </div>
         </div>
 
-        <NavLink to="/tools" className={({ isActive }) => isActive ? 'navbar-link active' : 'navbar-link'}>Tools</NavLink>
-        <NavLink to="/contact" className={({ isActive }) => isActive ? 'navbar-link active' : 'navbar-link'}>Contact</NavLink>
-        <NavLink to="/special-blog" className={({ isActive }) => isActive ? 'navbar-link active' : 'navbar-link'}>Special Blog</NavLink>
+        <NavLink to="/tools" className={({ isActive }) => isActive ? 'navbar-link active' : 'navbar-link'}>
+          Tools
+        </NavLink>
 
-        {loggedIn && (
-          <NavLink 
-            to="/profile" 
-            className={({ isActive }) => isActive ? 'navbar-link active' : 'navbar-link'}
-          >
-            Profile
-          </NavLink>
-        )}
-        
+        <NavLink to="/contact" className={({ isActive }) => isActive ? 'navbar-link active' : 'navbar-link'}>
+          Contact
+        </NavLink>
+
+        {/* Admin Dashboard + Login/Logout */}
         {isAdminLoggedIn && (
-          <NavLink 
-            to="/admin-dashboard" 
-            className={({ isActive }) => isActive ? 'navbar-link active' : 'navbar-link'}
-          >
+          <NavLink to="/admin-dashboard" className={({ isActive }) => isActive ? 'navbar-link active' : 'navbar-link'}>
             Admin Dashboard
           </NavLink>
         )}
@@ -102,6 +100,25 @@ const Navbar = ({ loggedIn, onLogout }) => {
             </div>
           </div>
         )}
+      </div>
+
+      {/* Right: Theme Toggle */}
+      <div className="navbar-right">
+        <button 
+          onClick={toggleTheme} 
+          className="navbar-link theme-toggle"
+          aria-label={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+        >
+          {isDarkMode ? '☀️' : '🌙'}
+          <span className="theme-toggle-text">
+            {isDarkMode ? 'Light' : 'Dark'}
+          </span>
+        </button>
+      </div>
+
+      {/* Mobile Menu Button */}
+      <div className="hamburger" onClick={toggleMenu}>
+        ☰
       </div>
     </nav>
   );

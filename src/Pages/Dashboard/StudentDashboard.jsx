@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { apiService } from '../../api/apiService';
-import '../../CSS/test.css';
+import '../../CSS/StudentDashboard.css';
 
 const StudentDashboard = ({ userData }) => {
   const [studentData, setStudentData] = useState(null);

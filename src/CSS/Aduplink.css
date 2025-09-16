@@ -1,12 +1,58 @@
+:root {
+  /* Light Mode Colors */
+  --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 30%, #f8fafc 100%);
+  --text-primary: #1a202c;
+  --text-secondary: #4a5568;
+  --text-muted: #718096;
+  --bg-upload: rgba(248, 250, 252, 0.95);
+  --bg-card: rgba(255, 255, 255, 0.9);
+  --bg-input: rgba(248, 250, 252, 0.8);
+  --border: rgba(226, 232, 240, 0.8);
+  --border-focus: #3b82f6;
+  --border-hover: rgba(59, 130, 246, 0.6);
+  --shadow-light: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-card: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --error-bg: rgba(239, 68, 68, 0.1);
+  --error-color: #dc2626;
+  --error-border: rgba(239, 68, 68, 0.2);
+  --link-color: #3b82f6;
+  --link-hover: #2563eb;
+  --overlay-bg: rgba(0, 0, 0, 0.6);
+}
+
+/* Dark Mode Colors */
+:root[data-theme="dark"] {
+  --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 30%, #0f172a 100%);
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --bg-upload: rgba(42, 52, 74, 0.9);
+  --bg-card: rgba(51, 65, 85, 0.8);
+  --bg-input: rgba(51, 65, 85, 0.8);
+  --border: rgba(71, 85, 105, 0.6);
+  --border-focus: #3b82f6;
+  --border-hover: rgba(59, 130, 246, 0.6);
+  --shadow-light: 0 20px 40px rgba(0, 0, 0, 0.4);
+  --shadow-card: 0 8px 25px rgba(0, 0, 0, 0.3);
+  --shadow-hover: 0 15px 35px rgba(0, 0, 0, 0.4);
+  --error-bg: rgba(220, 38, 38, 0.1);
+  --error-color: #f87171;
+  --error-border: rgba(220, 38, 38, 0.2);
+  --link-color: #3b82f6;
+  --link-hover: #60a5fa;
+  --overlay-bg: rgba(0, 0, 0, 0.8);
+}
+
 .adminUploadPage {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 30%, #0f172a 100%);
+  background: var(--bg-gradient);
   padding: 2rem;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .adminUploadPage h1 {
-  color: #f8fafc;
+  color: var(--text-primary);
   font-size: 2rem;
   font-weight: 600;
   text-align: center;
@@ -29,21 +75,21 @@
 .uploadSection {
   max-width: 600px;
   margin: 0 auto 3rem;
-  background: rgba(42, 52, 74, 0.9);
+  background: var(--bg-upload);
   backdrop-filter: blur(15px);
   padding: 2rem;
   border-radius: 20px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(51, 65, 85, 0.5);
+  box-shadow: var(--shadow-light);
+  border: 1px solid var(--border);
 }
 
 .linkInput {
   width: 100%;
   padding: 1rem 1.5rem;
-  background: rgba(51, 65, 85, 0.8);
-  border: 1px solid rgba(71, 85, 105, 0.6);
+  background: var(--bg-input);
+  border: 1px solid var(--border);
   border-radius: 10px;
-  color: #f8fafc;
+  color: var(--text-primary);
   font-size: 1rem;
   margin-bottom: 1rem;
   transition: all 0.3s ease;
@@ -53,12 +99,12 @@
 
 .linkInput:focus {
   outline: none;
-  border-color: #3b82f6;
+  border-color: var(--border-focus);
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
 .linkInput::placeholder {
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 .uploadButton {
@@ -95,24 +141,25 @@
 }
 
 .linkCard {
-  background: rgba(51, 65, 85, 0.8);
+  background: var(--bg-card);
   backdrop-filter: blur(10px);
   border-radius: 15px;
-  border: 1px solid rgba(71, 85, 105, 0.6);
+  border: 1px solid var(--border);
   overflow: hidden;
   transition: all 0.3s ease;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--shadow-card);
 }
 
 .linkCard:hover {
   transform: translateY(-5px);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-  border-color: rgba(59, 130, 246, 0.6);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--border-hover);
 }
 
 .linkCard.hidden-link {
   opacity: 0.6;
-  background: rgba(51, 65, 85, 0.5);
+  background: var(--bg-card);
+  filter: grayscale(0.3);
 }
 
 .thumbnailContainer {
@@ -138,11 +185,11 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.8);
+  background: var(--overlay-bg);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #f8fafc;
+  color: var(--text-primary);
   font-weight: 600;
   font-size: 1.2rem;
 }
@@ -152,7 +199,7 @@
 }
 
 .linkTitle {
-  color: #f8fafc;
+  color: var(--text-primary);
   font-size: 1.1rem;
   font-weight: 600;
   margin: 0 0 0.5rem 0;
@@ -164,7 +211,7 @@
 }
 
 .linkDescription {
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.9rem;
   margin: 0.5rem 0 1rem 0;
   line-height: 1.4;
@@ -172,7 +219,7 @@
 
 .linkUrl {
   display: inline-block;
-  color: #3b82f6;
+  color: var(--link-color);
   text-decoration: none;
   font-weight: 500;
   font-size: 0.9rem;
@@ -183,8 +230,8 @@
 }
 
 .linkUrl:hover {
-  border-bottom-color: #3b82f6;
-  color: #60a5fa;
+  border-bottom-color: var(--link-color);
+  color: var(--link-hover);
 }
 
 .actionButtons {
@@ -241,26 +288,24 @@
 }
 
 .error {
-  color: #f87171;
+  color: var(--error-color);
   text-align: center;
   font-size: 1.1rem;
-  background: rgba(220, 38, 38, 0.1);
+  background: var(--error-bg);
   padding: 1.5rem;
   border-radius: 12px;
-  border: 1px solid rgba(220, 38, 38, 0.2);
+  border: 1px solid var(--error-border);
   backdrop-filter: blur(10px);
   max-width: 600px;
   margin: 0 auto;
 }
 
-
 p {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   text-align: center;
   font-size: 1.2rem;
   margin: 2rem 0;
 }
-
 
 @media (max-width: 768px) {
   .adminUploadPage {
